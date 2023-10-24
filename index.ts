@@ -11,7 +11,7 @@ async function handler(_req: Request): Promise<Response> {
         console.log(
             `Tried with word ${guess}, similarity is ${similarityResult}, word to find is ${wordToFind}`
         );
-        return new Response(responseBuilder(guess, similarityResult));
+        return new Response(responseBuilder(guess, similarityResult, wordToFind));
     } catch (e) {
         console.error(e);
         return new Response("An error occured : ", e);
@@ -27,13 +27,13 @@ const extractGuess = async (req: Request) => {
     return guess;
 };
 
-const responseBuilder = (word: string, similarity: Number) => {
+const responseBuilder = (word: string, similarity: Number, wordToFind: string) => {
     if (similarity == 1) {
         return `Well played ! The word was ${word}.`;
     } else if (similarity > 0.5) {
-        return `${word} is very close to the word, score : ${similarity}`;
+        return `${word} is very close to the word to find ${wordToFind}, score : ${similarity}`;
     } else if (similarity < 0.5) {
-        return `${word} is quite far to the word, score : ${similarity}`;
+        return `${word} is quite far to the word to find ${wordToFind}, score : ${similarity}`;
     }
 };
 
