@@ -1,9 +1,9 @@
 import { serve } from "https://deno.land/std@0.119.0/http/server.ts";
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 
 async function handler(_req: Request): Promise<Response> {
     try {
-        const listeMots = fs.readFileSync('liste-mots.txt', 'utf8');
+        const listeMots = readFileSync('liste-mots.txt', 'utf8');
         const mots = listeMots.split(',');
         const wordToFind = mots[Math.floor(Math.random() * mots.length)];
         const guess = await extractGuess(_req);
